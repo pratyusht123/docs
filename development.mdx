@@ -1,107 +1,171 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title:  "Request Builder — Administrator Guide"
+slug:   "/docs/request-builder"
+date:   "2025-06-05"
+version: "Beta 0.9.4"
+description: >
+  How to build, style, and publish proof requests in InkLink—explained in
+  human-speak. Every option describes what an admin picks and what the end-user
+  will experience.
+authors:
+  - name: "InkLink Documentation Team"
+tags: ["admin", "proof-requests", "how-to"]
 ---
 
-<Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
-</Info>
+> **Who is this for?** Workspace members with the **Builder** or
+> **Administrator** role. If you’re only *answering* a request, jump to the
+> **End-User Guide**.
 
-Follow these steps to install and run Mintlify on your operating system:
+---
 
-**Step 1**: Install Mintlify:
+## Quick anatomy
 
-<CodeGroup>
+| Area | What the admin sees | What it’s for |
+|------|--------------------|---------------|
+| **Global header** | *Help • Save Draft • Publish Request* | Save work or ship live links. |
+| **Left-hand nav** | *Proof Request → Landing Page → Flow Setup → …* | Jump between the seven steps. |
+| **Main canvas** | Context-sensitive forms | Where you make choices. |
+| **“?” Help button** | Purple spark, bottom-right | Instant tips & chat support. |
 
-  ```bash npm
-  npm i -g mintlify
-  ```
+---
 
-```bash yarn
-yarn global add mintlify
-```
+## Step 1 — Proof Request
 
-</CodeGroup>
+### Why it matters  
+This is the **contract** you’re asking the user to fulfil: *what* to show, *who* must show it, and any example they can copy.
 
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
+### Fields & real-world effects
 
-```bash
-mintlify dev
-```
+| Field | What the admin decides | What the user sees / must do |
+|-------|-----------------------|------------------------------|
+| **Category** | Pick the closest label (Custom, Education, etc.). | A matching icon appears on the finished proof card; later, filters in dashboards. |
+| **Title** | Short sentence like “2024 Income Proof”. | Shown in the secure-browser header and in emails. |
+| **Description** | Friendly instructions in your own words. | Appears right before screenshot capture and in reminder emails. |
+| **Generate with AI** | Let InkLink draft Title + Description. | User sees the generated text exactly as saved. |
+| **Example URL (optional)** | Paste a sample proof link or webpage. | A “See example” link appears so users know what “good” looks like. |
+| **User Validation** | Decide if the screenshot must belong to the same person creating it. | • **Off** – anyone can create the proof.<br>• **Strict** – name on screenshot must match their verified ID; mismatch = error.<br>• **Fuzzy** – minor spelling tweaks accepted, fewer failures.<br>• **Third-Party** – parents/agents can create on someone else’s behalf; the finished proof reads “Submitted by X for Y”. |
+| **Note to Self** | Private memo for teammates. | User never sees it—only fellow admins reviewing the request. |
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+---
 
-### Custom Ports
+## Step 2 — Landing Page
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
+| Option | Admin picks | End-user experience |
+|--------|-------------|---------------------|
+| **Requester Name** | Choose legal name, brand name, or campaign alias. | Name shows in big text at top of the landing page and in browser tab title. |
+| **Button Text** | Swap “Create Proof” for any 25-char phrase. | Whatever you type becomes the big call-to-action button. |
+| **Notes** | Extra context: deadlines, support email, incentives. | Text appears under the button. If blank, the note section is hidden to keep things tidy. |
 
-```bash
-mintlify dev --port 3333
-```
+> **Tip:** Short, upbeat notes (“Takes 2-3 min on mobile.”) boost starts by ~10 %.
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+---
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
+## Step 3 — Flow Setup
 
-## Mintlify Versions
+### 3.1  Animation before the browser opens
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+| Choice | What happens to the user |
+|--------|--------------------------|
+| **None** | Secure browser pops up instantly—fastest load. |
+| **Short (2 s)** | Quick loader that just says “Opening secure browser…”. |
+| **Long (5 s, default)** | Adds a branded reassurance slide (“We never store your passwords”). Best for first-timers. |
 
-<CodeGroup>
+### 3.2  Screen-Capture Modes
 
-```bash npm
-npm i -g mintlify@latest
-```
+| Mode | Good for… | User journey |
+|------|-----------|--------------|
+| **Single** *(default)* | One-page proofs like pay-slips or ID cards. | User lands on target page, clicks **Capture** once, then moves straight to review. |
+| **Multiple – user decides** | Situations where needed info varies (e.g., freelance portfolios). | A floating **Capture** button follows them; they can snap 1, 2, or 10 screenshots, then hit **Finish**. |
+| **Multiple Defined** | Highly structured flows (e.g., three specific tax pages). | User sees a wizard: **Step 1 of 3**, takes the required shot, clicks **Next**, etc., until all mandatory screens are complete. |
 
-```bash yarn
-yarn global upgrade mintlify
-```
+> **Best practice:** Start with **Single**—it’s quickest and has the highest completion rate.
 
-</CodeGroup>
+### 3.3  Post-capture options
 
-## Validating Links
+| Toggle | If ON… | User impact |
+|--------|--------|-------------|
+| **Confirmation Modal** | Show “Here’s what we captured—proceed?” | Users can retake if they missed something, cutting support tickets. |
+| **Allow Redaction** | Blur tool enabled. | Users draw boxes over personal info before submitting. |
+| **Include Screenshot** | Thumbnail appears on proof card. | Reviewers can eyeball proof quality without downloading the full image. |
+| **Add to Blockchain** | Proof hash anchored on-chain. | A “Verified on blockchain” badge shows on the proof card. |
+| **Allow Removal of Auto-extracted Data** | Users may delete optional fields pulled by AI. | Useful for privacy when extraction grabs extra numbers (e.g., full account IDs). |
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
+---
 
-```bash
-mintlify broken-links
-```
+## Step 4 — Recommendations
 
-## Deployment
+| Admin action | User sees |
+|--------------|-----------|
+| **Show Panel** toggled ON | A tip box appears *before* the secure browser launches. |
+| **Write tips** in the editor | Your Markdown renders exactly—great for “Make sure you’re on desktop” or step-by-step GIFs. |
+| **Generate Tips with AI** | InkLink suggests bullet points based on the target site (edit as needed). |
 
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
+---
 
-If the deployment is successful, you should see the following:
+## Step 5 — Badge Image
 
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
+| Choice | Result for the user |
+|--------|--------------------|
+| **Upload PNG/SVG** | Proof card shows your custom icon—nice for brand recognition. |
+| **Restore Default** | Reverts to the generic category icon. |
 
-## Code Formatting
+---
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+## Step 6 — User Email (only if you send requests via InkLink mailer)
 
-## Troubleshooting
+| Editable part | What the recipient gets |
+|---------------|-------------------------|
+| **Subject line** | Appears in their inbox—keep ≤ 60 chars to avoid truncation. |
+| **HTML body** | The email they click; supports inline images and buttons. |
+| **Footer** | Uses your workspace default unless you override for this request. |
 
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
+> **Reminder cadence:** InkLink auto-nudges at 24 h and 72 h unless the user starts the proof. You can disable nudges in **Workspace › Email Settings**.
 
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
-  </Accordion>
+---
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
+## Step 7 — Other Settings
 
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+| Admin sets | End-user / analytics effect |
+|------------|----------------------------|
+| **Custom Source ID** (e.g., `summer-promo-25`) | Tag shows up in dashboards and in webhook payloads so you can tell which campaign drove each proof. Invisible to the user. |
+
+---
+
+## Publish & iterating later
+
+| Action | What happens |
+|--------|--------------|
+| **Publish Request** | Generates a shareable link + API slug. Anyone with the link can start the flow immediately. |
+| **Need to edit?** | Click **Edit**, make changes, then **Publish** again. Old links keep the old version; new link uses the update. |
+
+---
+
+## Appendix A — Credibility colours (what approvers will see)
+
+* **Green (≥ 70)** — ready to trust auto-pass  
+* **Amber (40-69)** — looks fine but may need spot-check  
+* **Red (< 40)** — routed to manual review queue  
+
+Most everyday proofs land in the high-60s to low-80s once blockchain anchoring is on.
+
+---
+
+## Appendix B — Keyboard shortcuts
+
+| Action | Windows / Linux | macOS |
+|--------|-----------------|-------|
+| Save Draft | **Ctrl S** | **⌘ S** |
+| Publish | **Ctrl ⇧ P** | **⌘ ⇧ P** |
+| Next step | **Ctrl →** | **⌘ →** |
+| Previous step | **Ctrl ←** | **⌘ ←** |
+| Open Help | **Ctrl /** | **⌘ /** |
+
+---
+
+### Still stuck?
+
+* Click the purple **?** in the bottom-right of any screen.  
+* Join live **Admin Office Hours** (Tue & Thu, 09:00 PT).  
+* Email **support@inklink.com** — we reply within one business day.
+
+---
